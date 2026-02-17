@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Container has NO background/shadows now */
+        .featured-games-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            padding: 40px;
+            font-family: Arial, sans-serif;
+        }
+
+        .game-card-horizontal {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Image frame with ActivityLab Inset Bevel */
+        .image-frame {
+            width: 300px;
+            height: 300px;
+            padding: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            box-shadow:
+                inset 3px 3px 0 #8a8a8a,
+                inset -3px -3px 0 #ffffff;
+        }
+
+        .image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Text Styling */
+        .game-details {
+            max-width: 450px;
+        }
+
+        .game-name {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #333;
+            margin: 0;
+            text-transform: uppercase;
+            /* Subtle white lift to pop against dark or light backgrounds */
+            text-shadow: 2px 2px 0 #ffffff;
+        }
+
+        .game-author {
+            font-size: 1.1rem;
+            color: #5a5a5a;
+            margin: 5px 0 25px 0;
+        }
+
+        /* Your ActivityLab Button Style */
+        .activity-btn {
+            background: linear-gradient(145deg, #00ff33, #00c82a);
+            color: white;
+            font-size: 22px;
+            padding: 14px 38px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            box-shadow:
+                inset 2px 2px 0 rgba(255,255,255,0.45),
+                inset -2px -2px 0 rgba(0,0,0,0.35),
+                5px 5px 10px rgba(0,0,0,0.3);
+            transition: transform 0.1s ease;
+        }
+
+        .activity-btn:active {
+            transform: translateY(2px);
+            box-shadow: inset 3px 3px 0 rgba(0,0,0,0.5);
+        }
+
+        /* Navigation styling */
+        .nav-button {
+            background: #d1d1d1;
+            border: none;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow:
+                2px 2px 0 #8a8a8a,
+                -2px -2px 0 #ffffff;
+        }
+
+        .nav-button:active {
+            box-shadow: inset 2px 2px 0 #8a8a8a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="featured-games-wrapper">
+        <button class="nav-button" onclick="move(-1)">◀</button>
+
+        <div id="game-target" class="game-card-horizontal">
+            </div>
+
+        <button class="nav-button" onclick="move(1)">▶</button>
+    </div>
+
+    <script>
+        // EASY TO UPDATE LIST
+        const myGames = [
+            {
+                name: "Gunspin",
+                author: "minijuegos.com",
+                img: "https://files.catbox.moe/0v2d77.jpg",
+                link: "https://race-online-skem.vercel.app/"
+            },
+            {
+                name: "Space Trip",
+                author: "ActivityLab",
+                img: "https://via.placeholder.com/300/00ff33/000000?text=Game+2",
+                link: "#"
+            }
+        ];
+
+        let index = 0;
+
+        function updateSlider() {
+            const g = myGames[index];
+            document.getElementById('game-target').innerHTML = `
+                <div class="image-frame">
+                    <img src="${g.img}" alt="${g.name}">
+                </div>
+                <div class="game-details">
+                    <h1 class="game-name">${g.name}</h1>
+                    <p class="game-author">by ${g.author}</p>
+                    <a href="${g.link}" class="activity-btn">PLAY NOW</a>
+                </div>
+            `;
+        }
+
+        function move(dir) {
+            index = (index + dir + myGames.length) % myGames.length;
+            updateSlider();
+        }
+
+        updateSlider();
+    </script>
+</body>
+</html>
